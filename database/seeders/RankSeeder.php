@@ -1,0 +1,93 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\Rank;
+
+class RankSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $ranks = [
+            ['rc' => '10.0', 'rank_full' => '2nd Lieutenant', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => '2/Lt', 'urdu_rank' => 'سیکنڈ لیفٹننٹ', 'af' => 'ARMY'],
+            ['rc' => '200.0', 'rank_full' => 'Air Chief Marshal', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Gen', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '300.0', 'rank_full' => 'Admiral', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Gen', 'urdu_rank' => null, 'af' => 'Navy'],
+            ['rc' => '203.0', 'rank_full' => 'Air Commodore', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Brig', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '257.0', 'rank_full' => 'Airman', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '56.0', 'rank_full' => 'Acting Lance Dafedar', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Lnk', 'urdu_rank' => 'اے ایل ڈی', 'af' => 'ARMY'],
+            ['rc' => '201.0', 'rank_full' => 'Air Marshal', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Lt Gen', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '201.0', 'rank_full' => 'Air Vice Marshal', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Maj Gen', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '224.0', 'rank_full' => 'Assistant Warrant Officer', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'N/Sub', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '4.0', 'rank_full' => 'Brigadier', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Brig', 'urdu_rank' => 'بریگیڈیئر', 'af' => 'ARMY'],
+            ['rc' => '8.0', 'rank_full' => 'Captain', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Capt', 'urdu_rank' => 'کیپٹن', 'af' => 'ARMY'],
+            ['rc' => '303.0', 'rank_full' => 'Commander', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Lt Col', 'urdu_rank' => null, 'af' => 'Navy'],
+            ['rc' => '62.0', 'rank_full' => 'Craftsman', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => 'کرافٹس مین', 'af' => 'ARMY'],
+            ['rc' => '250.0', 'rank_full' => 'Chief Technician', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Hav', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '5.0', 'rank_full' => 'Colonel', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Col', 'urdu_rank' => 'کرنل', 'af' => 'ARMY'],
+            ['rc' => '253.0', 'rank_full' => 'Corporal Technician', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Nk', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '309.0', 'rank_full' => 'Chief Petty Officer', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'N/Sub', 'urdu_rank' => null, 'af' => 'Navy'],
+            ['rc' => '222.0', 'rank_full' => 'Chief Warrant Officer', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'SM', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '60.0', 'rank_full' => 'Driver AT', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => 'ڈرائیور اے ٹی', 'af' => 'ARMY'],
+            ['rc' => '51.0', 'rank_full' => 'Dafedar', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Hav', 'urdu_rank' => 'دفعدار', 'af' => 'ARMY'],
+            ['rc' => '308.0', 'rank_full' => 'Fleet Chief Petty Officer', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'Sub', 'urdu_rank' => null, 'af' => 'Navy'],
+            ['rc' => '207.0', 'rank_full' => 'Flight Lieutenant', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Capt', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '208.0', 'rank_full' => 'Flying Officer', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Lt', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '1.0', 'rank_full' => 'General', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Gen', 'urdu_rank' => 'جنرل', 'af' => 'ARMY'],
+            ['rc' => '58.0', 'rank_full' => 'Gunners', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => 'گنر', 'af' => 'ARMY'],
+            ['rc' => '204.0', 'rank_full' => 'Group Captain', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Col', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '20.0', 'rank_full' => 'Hon Captain', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'H/Capt', 'urdu_rank' => 'آنریری کیپٹن', 'af' => 'ARMY'],
+            ['rc' => '220.0', 'rank_full' => 'Honorary Flight Lieutenant', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'H/Capt', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '221.0', 'rank_full' => 'Honorary Flying Officer', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'H/Lt', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '21.0', 'rank_full' => 'Hon Lieutenant', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'H/Lt', 'urdu_rank' => 'آنریری لیفٹیننٹ', 'af' => 'ARMY'],
+            ['rc' => '50.0', 'rank_full' => 'Havildar', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Hav', 'urdu_rank' => 'حوالدار', 'af' => 'ARMY'],
+            ['rc' => '254.0', 'rank_full' => 'Junior Technician', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Lnk', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '23.0', 'rank_full' => 'Khateeb', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'Sub', 'urdu_rank' => 'خطیب', 'af' => 'ARMY'],
+            ['rc' => '22.0', 'rank_full' => 'Khateeb-e-Ala', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'SM', 'urdu_rank' => 'خطیب اعلیٰ', 'af' => 'ARMY'],
+            ['rc' => '52.0', 'rank_full' => 'Lance Havildar', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'L/Hav', 'urdu_rank' => 'لانس حوالدار', 'af' => 'ARMY'],
+            ['rc' => '258.0', 'rank_full' => 'Leading Aircraftman', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '54.0', 'rank_full' => 'Lance Dafedar', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Nk', 'urdu_rank' => 'لانس دفعدار', 'af' => 'ARMY'],
+            ['rc' => '311.0', 'rank_full' => 'Leading', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Nk', 'urdu_rank' => null, 'af' => 'Navy'],
+            ['rc' => '55.0', 'rank_full' => 'Lance Naik', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Lnk', 'urdu_rank' => 'لانس نائیک', 'af' => 'ARMY'],
+            ['rc' => '9.0', 'rank_full' => 'Lieutenant', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Lt', 'urdu_rank' => 'لیفٹننٹ', 'af' => 'ARMY'],
+            ['rc' => '304.0', 'rank_full' => 'Lt Commander', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Maj', 'urdu_rank' => null, 'af' => 'Navy'],
+            ['rc' => '6.0', 'rank_full' => 'Lieutenant Colonel', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Lt Col', 'urdu_rank' => 'لیفٹننٹ کرنل', 'af' => 'ARMY'],
+            ['rc' => '2.0', 'rank_full' => 'Lieutenant General', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Lt Gen', 'urdu_rank' => 'لیفٹننٹ جنرل', 'af' => 'ARMY'],
+            ['rc' => '305.0', 'rank_full' => 'Lt Navy', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Capt', 'urdu_rank' => null, 'af' => 'Navy'],
+            ['rc' => '7.0', 'rank_full' => 'Major', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Maj', 'urdu_rank' => 'میجر', 'af' => 'ARMY'],
+            ['rc' => '3.0', 'rank_full' => 'Major General', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Maj Gen', 'urdu_rank' => 'میجر جنرل', 'af' => 'ARMY'],
+            ['rc' => '307.0', 'rank_full' => 'Master Chief Petty Officer', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'SM', 'urdu_rank' => null, 'af' => 'Navy'],
+            ['rc' => '207.0', 'rank_full' => 'Master Warrant Officer', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'SM', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '24.0', 'rank_full' => 'Naib Khateeb', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'N/Sub', 'urdu_rank' => 'نائب خطیب', 'af' => 'ARMY'],
+            ['rc' => '24.0', 'rank_full' => 'Naib Risaldar', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'N/Sub', 'urdu_rank' => 'نائب رسالدار', 'af' => 'ARMY'],
+            ['rc' => '24.0', 'rank_full' => 'Naib Subedar', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'N/Sub', 'urdu_rank' => 'نائب صوبیدار', 'af' => 'ARMY'],
+            ['rc' => '65.0', 'rank_full' => 'Non-Combatant Bearer', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => 'این سی بی', 'af' => 'ARMY'],
+            ['rc' => '64.0', 'rank_full' => 'Non-Combatant Enrolled', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => 'این سی ای', 'af' => 'ARMY'],
+            ['rc' => '53.0', 'rank_full' => 'Naik', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Nk', 'urdu_rank' => 'نائیک', 'af' => 'ARMY'],
+            ['rc' => '209.0', 'rank_full' => 'Pilot Officer', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => '2/Lt', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '310.0', 'rank_full' => 'Petty Officer', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Hav', 'urdu_rank' => null, 'af' => 'Navy'],
+            ['rc' => '302.0', 'rank_full' => 'Rear Admiral', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Maj Gen', 'urdu_rank' => null, 'af' => 'Navy'],
+            ['rc' => '67.0', 'rank_full' => 'Recruit', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => 'ریکروٹ', 'af' => 'ARMY'],
+            ['rc' => '23.0', 'rank_full' => 'Risaldar', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'Sub', 'urdu_rank' => 'رسالدار', 'af' => 'ARMY'],
+            ['rc' => '22.0', 'rank_full' => 'Risaldar Major', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'RM', 'urdu_rank' => 'رسالدار میجر', 'af' => 'ARMY'],
+            ['rc' => '255.0', 'rank_full' => 'Senior Aircraftman', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Lnk', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '315.0', 'rank_full' => 'Sailor', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => null, 'af' => 'Navy'],
+            ['rc' => '63.0', 'rank_full' => 'Sepoy', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => 'سپاہی', 'af' => 'ARMY'],
+            ['rc' => '252.0', 'rank_full' => 'Sergeant', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Hav', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '57.0', 'rank_full' => 'Signalman', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => 'سگنل مین', 'af' => 'ARMY'],
+            ['rc' => '22.0', 'rank_full' => 'Subedar Major', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'SM', 'urdu_rank' => 'صوبیدار میجر', 'af' => 'ARMY'],
+            ['rc' => '251.0', 'rank_full' => 'Senior Technician', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Hav', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '59.0', 'rank_full' => 'Sapper', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => 'سیپر', 'af' => 'ARMY'],
+            ['rc' => '206.0', 'rank_full' => 'Squadron Leader', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Maj', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '23.0', 'rank_full' => 'Subedar', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'Sub', 'urdu_rank' => 'صوبیدار', 'af' => 'ARMY'],
+            ['rc' => '306.0', 'rank_full' => 'Sub Lieutenant', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => '2/Lt', 'urdu_rank' => null, 'af' => 'Navy'],
+            ['rc' => '66.0', 'rank_full' => 'Sweeper', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => 'سوئیپر', 'af' => 'ARMY'],
+            ['rc' => '61.0', 'rank_full' => 'Sawar', 'rank_cat' => 'Sldrs', 'rank_cat_code' => '3', 'corres_rank' => 'Sep', 'urdu_rank' => 'سوار', 'af' => 'ARMY'],
+            ['rc' => '301.0', 'rank_full' => 'Vice Admiral', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Lt Gen', 'urdu_rank' => null, 'af' => 'Navy'],
+            ['rc' => '205.0', 'rank_full' => 'Wing Commander', 'rank_cat' => 'Offrs', 'rank_cat_code' => '1', 'corres_rank' => 'Lt Col', 'urdu_rank' => null, 'af' => 'PAF'],
+            ['rc' => '223.0', 'rank_full' => 'Warrant Officer', 'rank_cat' => 'JCOs', 'rank_cat_code' => '2', 'corres_rank' => 'Sub', 'urdu_rank' => null, 'af' => 'PAF'],
+        ];
+
+        Rank::insert($ranks);
+    }
+}
