@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('pensioners', function (Blueprint $table) {
@@ -16,10 +13,10 @@ return new class extends Migration
             $table->date('date_of_entry')->nullable();
             $table->string('prefix')->nullable();
             $table->string('personal_no')->unique();
-            $table->string('rank')->nullable();
+            $table->foreignId('rank_id')->nullable()->constrained('ranks')->nullOnDelete();
             $table->string('trade')->nullable();
             $table->string('name');
-            $table->string('regt_corps')->nullable();
+            $table->foreignId('regt_corps_id')->nullable()->constrained('regt_corps')->nullOnDelete();
             $table->string('type_of_pension')->nullable();
             $table->string('parent_unit')->nullable();
             $table->string('nok_name')->nullable();
@@ -38,9 +35,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('pensioners');

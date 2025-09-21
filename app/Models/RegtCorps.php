@@ -19,4 +19,10 @@ class RegtCorps extends Model
         'text_sro',
         'urdu_text_sro',
     ];
+    public function getDisplayNameAttribute()
+    {
+        return $this->rw
+            ? "{$this->rw} ({$this->force})"
+            : $this->force;
+    }
 }
