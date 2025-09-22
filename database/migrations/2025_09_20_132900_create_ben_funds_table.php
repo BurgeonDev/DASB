@@ -6,30 +6,42 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('ben_funds', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pensioner_id')->constrained('pensioners')->onDelete('cascade');
-            $table->string('ben_pers_no')->nullable();
-            $table->string('banker_name')->nullable();
+
+            // Relation to pensioner
+            $table->foreignId('pensioner_id')
+                ->constrained('pensioners')
+                ->onDelete('cascade');
+
+            // Bank Details
+            $table->string('bank_name')->nullable();
             $table->string('branch_code')->nullable();
-            $table->string('account_no')->nullable();
+            $table->string('bank_acct_no')->nullable();
             $table->string('iban_no')->nullable();
+
+            // Fund Details
             $table->decimal('amount_received', 12, 2)->nullable();
             $table->date('amount_received_date')->nullable();
-            $table->string('remarks')->nullable();
+            $table->text('remarks')->nullable();
+
+            // Administrative Info
+            $table->string('marital_status')->nullable();
+            $table->string('dasb_file_no')->nullable();
+            $table->string('originator')->nullable();
+            $table->date('originator_ltr_date')->nullable();
+            $table->string('originator_ltr_no')->nullable();
+            $table->text('originator_contents')->nullable();
+            $table->string('status')->default('Received');
+            $table->string('hwo_concerned')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('ben_funds');

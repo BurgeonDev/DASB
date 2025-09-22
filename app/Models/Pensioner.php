@@ -48,6 +48,7 @@ class Pensioner extends Model
         return $this->hasMany(BenFund::class);
     }
 
+
     public function rank()
     {
         return $this->belongsTo(Rank::class);
