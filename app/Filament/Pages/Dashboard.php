@@ -16,7 +16,6 @@ class Dashboard extends BaseDashboard
     {
         return [
             StatsOverview::class,
-            PensionTrends::class,
         ];
     }
 }

@@ -39,11 +39,14 @@ class AdminPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
                 // Profile::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            // ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
+                \App\Filament\Widgets\StatsOverview::class, // ✅ Your KPIs
+                \App\Filament\Widgets\PensionTrends::class, // ✅ Your Graphs
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+
             ])
+
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
