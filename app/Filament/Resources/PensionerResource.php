@@ -31,11 +31,28 @@ class PensionerResource extends Resource
                 ->schema([
                     Forms\Components\DatePicker::make('date_of_entry')
                         ->label('Date of Entry')
+                        ->default(now())   // auto-selects today's date
+                        ->native(false)    // optional: shows a nice JS date picker instead of system one
                         ->columnSpan(1),
 
-                    Forms\Components\TextInput::make('prefix')
-                        ->maxLength(50)
+
+                    Forms\Components\Select::make('prefix')
+                        ->label('Prefix')
+                        ->options([
+                            'PA-'  => 'PA-',
+                            'PSS-' => 'PSS-',
+                            'PJO-' => 'PJO-',
+                            'PTC-' => 'PTC-',
+                            'SR-'  => 'SR-',
+                            'PSP-' => 'PSP-',
+                            'PR-'  => 'PR-',
+                            'Pak-' => 'Pak-',
+                            'NPO-' => 'NPO-',
+                        ])
+                        ->searchable()
+                        ->required()
                         ->columnSpan(1),
+
 
                     Forms\Components\TextInput::make('personal_no')
                         ->label('Personal No')
@@ -54,12 +71,6 @@ class PensionerResource extends Resource
                     Forms\Components\TextInput::make('trade')
                         ->maxLength(100)
                         ->columnSpan(1),
-
-                    Forms\Components\TextInput::make('name')
-                        ->required()
-                        ->maxLength(255)
-                        ->columnSpan(2),
-
                     Forms\Components\Select::make('regt_corps_id')
                         ->label('Regt / Corps')
                         ->relationship('regtCorps', 'id')
@@ -71,7 +82,14 @@ class PensionerResource extends Resource
                         ->searchable()
                         ->preload()
                         ->nullable()
+                        ->columnSpan(1),
+
+                    Forms\Components\TextInput::make('name')
+                        ->required()
+                        ->maxLength(255)
                         ->columnSpan(2),
+
+
 
                     Forms\Components\Select::make('type_of_pension')
                         ->label('Type of Pension')

@@ -32,6 +32,28 @@ class Pensioner extends Model
         'regt_corps_id',
     ];
 
+    // ✅ Cascade soft delete children
+    protected static function booted()
+    {
+        static::deleting(function ($pensioner) {
+            if ($pensioner->isForceDeleting()) {
+                $pensioner->familyMembers()->forceDelete();
+                $pensioner->pensionCases()->forceDelete();
+                $pensioner->benFunds()->forceDelete();
+            } else {
+                $pensioner->familyMembers()->delete();
+                $pensioner->pensionCases()->delete();
+                $pensioner->benFunds()->delete();
+            }
+        });
+
+        static::restoring(function ($pensioner) {
+            $pensioner->familyMembers()->withTrashed()->restore();
+            $pensioner->pensionCases()->withTrashed()->restore();
+            $pensioner->benFunds()->withTrashed()->restore();
+        });
+    }
+
     // ✅ Relations
     public function familyMembers()
     {
@@ -47,7 +69,6 @@ class Pensioner extends Model
     {
         return $this->hasMany(BenFund::class);
     }
-
 
     public function rank()
     {
