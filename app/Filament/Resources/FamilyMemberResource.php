@@ -3,111 +3,116 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\FamilyMemberResource\Pages;
-use App\Filament\Resources\FamilyMemberResource\RelationManagers;
 use App\Models\FamilyMember;
+use App\Models\Pensioner;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class FamilyMemberResource extends Resource
 {
     protected static ?string $model = FamilyMember::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationGroup = 'Pension Management';
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('pensioner_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('relation')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('dob'),
-                Forms\Components\DatePicker::make('do_marriage'),
-                Forms\Components\TextInput::make('education')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('profession')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('marital_status')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('disability')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('cnic_no')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('mobile_no')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('monthly_income')
-                    ->numeric()
-                    ->default(null),
-            ]);
+        return $form->schema([
+
+            Forms\Components\Select::make('pensioner_id')
+                ->label('Pensioner')
+                ->relationship('pensioner', 'name')
+                ->searchable()
+                ->preload()
+                ->required(),
+
+            Forms\Components\TextInput::make('name')->required(),
+
+            Forms\Components\Select::make('relation')
+                ->options([
+                    'Father'   => 'Father',
+                    'Mother'   => 'Mother',
+                    'Wife'     => 'Wife',
+                    'Son'      => 'Son',
+                    'Daughter' => 'Daughter',
+                    'Brother'  => 'Brother',
+                    'Sister'   => 'Sister',
+                    'Other'    => 'Other',
+                ])
+                ->searchable(),
+
+            Forms\Components\DatePicker::make('dob')->label('Date of Birth'),
+            Forms\Components\DatePicker::make('do_death')->label('Date of Death'),
+            Forms\Components\DatePicker::make('do_marriage')->label('Date of Marriage'),
+
+            Forms\Components\TextInput::make('education'),
+            Forms\Components\TextInput::make('profession'),
+
+            Forms\Components\Select::make('marital_status')
+                ->options([
+                    'Single' => 'Single',
+                    'Married' => 'Married',
+                    'Widowed' => 'Widowed',
+                    'Divorced' => 'Divorced',
+                ]),
+
+            Forms\Components\Select::make('disability')
+                ->options(['Yes' => 'Yes', 'No' => 'No'])
+                ->nullable(),
+
+            Forms\Components\TextInput::make('cnic_no')->label('CNIC'),
+            Forms\Components\TextInput::make('id_marks')->label('ID Marks'),
+            Forms\Components\TextInput::make('mobile_no')->label('Mobile No'),
+
+            Forms\Components\TextInput::make('source_of_income')->label('Source of Income'),
+            Forms\Components\TextInput::make('monthly_income')->numeric()->label('Monthly Income'),
+
+            Forms\Components\Textarea::make('remarks'),
+
+            Forms\Components\TextInput::make('psb_no')->label('PSB No'),
+            Forms\Components\TextInput::make('ppo_no')->label('PPO No'),
+            Forms\Components\TextInput::make('gpo')->label('GPO'),
+            Forms\Components\TextInput::make('pdo')->label('PDO'),
+
+            Forms\Components\TextInput::make('net_pension')->numeric()->label('Net Pension'),
+
+            Forms\Components\TextInput::make('bank_name')->label('Bank Name'),
+            Forms\Components\TextInput::make('bank_branch')->label('Bank Branch'),
+            Forms\Components\TextInput::make('bank_code')->label('Bank Code'),
+            Forms\Components\TextInput::make('bank_acct_no')->label('Bank Account No'),
+            Forms\Components\TextInput::make('iban_no')->label('IBAN No'),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('pensioner_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('relation')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('dob')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('do_marriage')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('education')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('profession')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('marital_status')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('disability')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('cnic_no')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('mobile_no')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('monthly_income')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('pensioner.name')->label('Pensioner')->searchable(),
+                Tables\Columns\TextColumn::make('name')->label('Family Member')->searchable(),
+                Tables\Columns\TextColumn::make('relation')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('dob')->date()->sortable(),
+                Tables\Columns\TextColumn::make('cnic_no')->label('CNIC')->searchable(),
+                Tables\Columns\TextColumn::make('mobile_no')->label('Mobile')->searchable(),
+                Tables\Columns\TextColumn::make('marital_status')->sortable(),
+                Tables\Columns\TextColumn::make('monthly_income')->numeric()->sortable(),
+                Tables\Columns\TextColumn::make('bank_name')->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('relation')->options([
+                    'Father' => 'Father',
+                    'Mother' => 'Mother',
+                    'Wife' => 'Wife',
+                    'Son' => 'Son',
+                    'Daughter' => 'Daughter',
+                ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -118,9 +123,7 @@ class FamilyMemberResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

@@ -23,92 +23,113 @@ class PensionerResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\DatePicker::make('date_of_entry')
-                ->label('Date of Entry'),
+            Forms\Components\Section::make('Basic Information')
+                ->columns(3)
+                ->schema([
+                    Forms\Components\DatePicker::make('date_of_entry')
+                        ->label('Date of Entry')
+                        ->columnSpan(1),
 
-            Forms\Components\TextInput::make('prefix')
-                ->maxLength(50),
+                    Forms\Components\TextInput::make('prefix')
+                        ->maxLength(50)
+                        ->columnSpan(1),
 
-            Forms\Components\TextInput::make('personal_no')
-                ->label('Personal No')
-                ->required()
-                ->maxLength(255),
+                    Forms\Components\TextInput::make('personal_no')
+                        ->label('Personal No')
+                        ->required()
+                        ->maxLength(255)
+                        ->columnSpan(1),
 
-            Forms\Components\Select::make('rank_id')
-                ->label('Rank')
-                ->relationship('rank', 'rank_full')
-                ->searchable()
-                ->preload()
-                ->nullable(),
+                    Forms\Components\Select::make('rank_id')
+                        ->label('Rank')
+                        ->relationship('rank', 'rank_full')
+                        ->searchable()
+                        ->preload()
+                        ->nullable()
+                        ->columnSpan(1),
 
-            Forms\Components\TextInput::make('trade')
-                ->maxLength(100),
+                    Forms\Components\TextInput::make('trade')
+                        ->maxLength(100)
+                        ->columnSpan(1),
 
-            Forms\Components\TextInput::make('name')
-                ->required()
-                ->maxLength(255),
+                    Forms\Components\TextInput::make('name')
+                        ->required()
+                        ->maxLength(255)
+                        ->columnSpan(2),
 
-            Forms\Components\Select::make('regt_corps_id')
-                ->label('Regt / Corps')
-                ->relationship('regtCorps', 'id') // use real column
-                ->getOptionLabelFromRecordUsing(
-                    fn($record) => $record->rw
-                        ? "{$record->rw} ({$record->force})"
-                        : $record->force
-                )
-                ->searchable()
-                ->preload()
-                ->nullable(),
+                    Forms\Components\Select::make('regt_corps_id')
+                        ->label('Regt / Corps')
+                        ->relationship('regtCorps', 'id')
+                        ->getOptionLabelFromRecordUsing(
+                            fn($record) => $record->rw
+                                ? "{$record->rw} ({$record->force})"
+                                : $record->force
+                        )
+                        ->searchable()
+                        ->preload()
+                        ->nullable()
+                        ->columnSpan(2),
 
+                    Forms\Components\Select::make('type_of_pension')
+                        ->label('Type of Pension')
+                        ->options(\App\Models\PensionCategory::pluck('pen_cat', 'pen_cat')->toArray())
+                        ->searchable()
+                        ->preload()
+                        ->nullable()
+                        ->columnSpan(1),
+                ]),
 
-            Forms\Components\Select::make('type_of_pension')
-                ->label('Type of Pension')
-                ->options(PensionCategory::pluck('pen_cat', 'pen_cat')->toArray())
-                ->searchable()
-                ->preload()
-                ->nullable(),
+            Forms\Components\Section::make('Family Details')
+                ->columns(2)
+                ->schema([
+                    Forms\Components\TextInput::make('nok_name')
+                        ->label('Next of Kin Name')
+                        ->maxLength(255),
 
-            Forms\Components\TextInput::make('parent_unit')
-                ->maxLength(255),
+                    Forms\Components\Select::make('nok_relation')
+                        ->label('NOK Relation')
+                        ->options([
+                            'Father' => 'Father',
+                            'Mother' => 'Mother',
+                            'Wife'   => 'Wife',
+                            'Son'    => 'Son',
+                            'Daughter' => 'Daughter',
+                            'Brother'  => 'Brother',
+                            'Sister'   => 'Sister',
+                            'Other'    => 'Other',
+                        ])
+                        ->searchable()
+                        ->nullable(),
+                ]),
 
-            Forms\Components\TextInput::make('nok_name')
-                ->label('Next of Kin Name')
-                ->maxLength(255),
+            Forms\Components\Section::make('Address Information')
+                ->columns(3)
+                ->schema([
+                    Forms\Components\TextInput::make('village')->maxLength(255),
+                    Forms\Components\TextInput::make('post_office')->maxLength(255),
+                    Forms\Components\TextInput::make('uc_name')->label('Union Council')->maxLength(255),
+                    Forms\Components\TextInput::make('tehsil')->maxLength(255),
+                    Forms\Components\TextInput::make('district')->maxLength(255),
+                    Forms\Components\TextInput::make('present_address')
+                        ->maxLength(255)
+                        ->columnSpan(3),
+                ]),
 
-            Forms\Components\Select::make('nok_relation')
-                ->label('NOK Relation')
-                ->options([
-                    'Father' => 'Father',
-                    'Mother' => 'Mother',
-                    'Wife'   => 'Wife',
-                    'Son'    => 'Son',
-                    'Daughter' => 'Daughter',
-                    'Brother'  => 'Brother',
-                    'Sister'   => 'Sister',
-                    'Other'    => 'Other',
-                ])
-                ->searchable()
-                ->nullable(),
+            Forms\Components\Section::make('Contact & Pension')
+                ->columns(3)
+                ->schema([
+                    Forms\Components\TextInput::make('mobile_no')
+                        ->label('Mobile No')
+                        ->maxLength(20),
 
-            Forms\Components\TextInput::make('village')->maxLength(255),
-            Forms\Components\TextInput::make('post_office')->maxLength(255),
-            Forms\Components\TextInput::make('uc_name')->label('Union Council')->maxLength(255),
-            Forms\Components\TextInput::make('tehsil')->maxLength(255),
-            Forms\Components\TextInput::make('district')->maxLength(255),
+                    Forms\Components\TextInput::make('cnic_no')
+                        ->label('CNIC')
+                        ->maxLength(20),
 
-            Forms\Components\TextInput::make('present_address')->maxLength(255),
-
-            Forms\Components\TextInput::make('mobile_no')
-                ->label('Mobile No')
-                ->maxLength(20),
-
-            Forms\Components\TextInput::make('cnic_no')
-                ->label('CNIC')
-                ->maxLength(20),
-
-            Forms\Components\TextInput::make('net_pension')
-                ->label('Net Pension')
-                ->numeric(),
+                    Forms\Components\TextInput::make('net_pension')
+                        ->label('Net Pension')
+                        ->numeric(),
+                ]),
         ]);
     }
 
