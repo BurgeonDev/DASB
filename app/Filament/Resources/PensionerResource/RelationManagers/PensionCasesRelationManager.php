@@ -16,16 +16,44 @@ class PensionCasesRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\TextInput::make('pen_ex_no')->label('PEN Ex No'),
-            Forms\Components\TextInput::make('status'),
-            Forms\Components\DatePicker::make('pen_do_entry')->label('Date of Entry'),
-            Forms\Components\TextInput::make('reg_ser_no')->label('Reg/Ser No'),
-            Forms\Components\TextInput::make('gp_insurance_claim_ltr')->label('GP Insurance Claim'),
-            Forms\Components\TextInput::make('benfund_claim_ltr')->label('BenFund Claim'),
-            Forms\Components\TextInput::make('dasb_ltr_no')->label('DASB Ltr No'),
-            Forms\Components\DatePicker::make('dasb_ltr_date')->label('DASB Ltr Date'),
-            Forms\Components\DatePicker::make('finalized_date'),
-            Forms\Components\Textarea::make('remarks')->columnSpanFull(),
+            Forms\Components\TextInput::make('pen_ex_no')
+                ->label('PEN Ex No')
+                ->maxLength(255),
+
+            Forms\Components\Select::make('status')
+                ->label('Status')
+                ->options([
+                    'Initiated' => 'Initiated',
+                    'Pending'   => 'Pending',
+                    'Finalized' => 'Finalized',
+                ])
+                ->required(),
+
+            Forms\Components\DatePicker::make('pen_do_entry')
+                ->label('Date of Entry')
+                ->default(now()),
+
+            Forms\Components\TextInput::make('reg_ser_no')
+                ->label('Reg/Ser No'),
+
+            Forms\Components\TextInput::make('gp_insurance_claim_ltr')
+                ->label('GP Insurance Claim'),
+
+            Forms\Components\TextInput::make('benfund_claim_ltr')
+                ->label('BenFund Claim'),
+
+            Forms\Components\TextInput::make('dasb_ltr_no')
+                ->label('DASB Ltr No'),
+
+            Forms\Components\DatePicker::make('dasb_ltr_date')
+                ->label('DASB Ltr Date'),
+
+            Forms\Components\DatePicker::make('finalized_date')
+                ->label('Finalized Date'),
+
+            Forms\Components\Textarea::make('remarks')
+                ->label('Remarks')
+                ->columnSpanFull(),
         ]);
     }
 

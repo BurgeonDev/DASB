@@ -188,7 +188,13 @@ class PensionerResource extends Resource
                     ->options(Pensioner::query()->distinct()->pluck('district', 'district')->filter()->toArray())
                     ->searchable(),
             ])
-            ->actions([Tables\Actions\EditAction::make()])
+            ->actions(
+                [
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+
+                ]
+            )
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
                 ExportBulkAction::make()
