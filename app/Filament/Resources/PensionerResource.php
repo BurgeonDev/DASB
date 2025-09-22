@@ -73,16 +73,21 @@ class PensionerResource extends Resource
                         ->columnSpan(1),
                     Forms\Components\Select::make('regt_corps_id')
                         ->label('Regt / Corps')
-                        ->relationship('regtCorps', 'id')
+                        ->relationship(
+                            name: 'regtCorps',
+                            titleAttribute: 'rw', // pick a default searchable column
+                            modifyQueryUsing: fn($query) => $query->select(['id', 'rw', 'force']) // optimization
+                        )
                         ->getOptionLabelFromRecordUsing(
                             fn($record) => $record->rw
                                 ? "{$record->rw} ({$record->force})"
                                 : $record->force
                         )
-                        ->searchable()
+                        ->searchable(['rw', 'force']) // 🔥 allow search by both rw & force
                         ->preload()
                         ->nullable()
                         ->columnSpan(1),
+
 
                     Forms\Components\TextInput::make('name')
                         ->required()
