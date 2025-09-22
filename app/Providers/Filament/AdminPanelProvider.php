@@ -43,7 +43,9 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 \App\Filament\Widgets\StatsOverview::class, // ✅ Your KPIs
                 \App\Filament\Widgets\PensionTrends::class, // ✅ Your Graphs
-                Widgets\AccountWidget::class,
+                \App\Filament\Widgets\PensionersByCategory::class, // ✅ Your Graphs
+                \App\Filament\Widgets\PensionersByForce::class,
+                // Widgets\AccountWidget::class,
 
             ])
 
