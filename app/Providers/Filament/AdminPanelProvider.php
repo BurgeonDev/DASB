@@ -42,9 +42,10 @@ class AdminPanelProvider extends PanelProvider
             // ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 \App\Filament\Widgets\StatsOverview::class, // ✅ Your KPIs
-                \App\Filament\Widgets\PensionTrends::class, // ✅ Your Graphs
                 \App\Filament\Widgets\PensionersByCategory::class, // ✅ Your Graphs
                 \App\Filament\Widgets\PensionersByForce::class,
+                \App\Filament\Widgets\PensionTrends::class, // ✅ Your Graphs
+
                 // Widgets\AccountWidget::class,
 
             ])

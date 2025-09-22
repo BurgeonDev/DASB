@@ -13,6 +13,9 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
+use Maatwebsite\Excel\Excel;
 
 class PensionerResource extends Resource
 {
@@ -72,7 +75,7 @@ class PensionerResource extends Resource
 
                     Forms\Components\Select::make('type_of_pension')
                         ->label('Type of Pension')
-                        ->options(\App\Models\PensionCategory::pluck('pen_cat', 'pen_cat')->toArray())
+                        ->options(PensionCategory::pluck('pen_cat', 'pen_cat')->toArray())
                         ->searchable()
                         ->preload()
                         ->nullable()
@@ -164,9 +167,15 @@ class PensionerResource extends Resource
             ])
             ->actions([Tables\Actions\EditAction::make()])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
+                ExportBulkAction::make()
+                    ->label('Export')
+                    ->exports([
+                        ExcelExport::make()->withWriterType(Excel::XLSX)->label('Excel'),
+                        ExcelExport::make()->withWriterType(Excel::CSV)->label('CSV'),
+                        ExcelExport::make()->withWriterType(Excel::ODS)->label('ODS'),
+                        ExcelExport::make()->withWriterType(Excel::HTML)->label('HTML'),
+                    ]),
             ]);
     }
 
