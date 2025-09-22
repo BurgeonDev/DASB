@@ -29,13 +29,13 @@ class StatsOverview extends BaseWidget
                 ->icon('heroicon-o-clock')
                 ->color('warning'),
 
-            Stat::make('Ben Fund Cases', BenFund::count())
-                ->description('Benevolent Fund records')
+            Stat::make('Ben Fund Records', BenFund::count())
+                ->description('Benevolent fund cases')
                 ->icon('heroicon-o-banknotes')
                 ->color('primary'),
 
-            Stat::make('Monthly Pension Total', number_format(Pensioner::sum('net_pension')))
-                ->description('Aggregate pension amount')
+            Stat::make('Total Pension Amount', number_format(Pensioner::sum('net_pension')))
+                ->description('Net pension sum')
                 ->icon('heroicon-o-currency-dollar')
                 ->color('danger'),
         ];

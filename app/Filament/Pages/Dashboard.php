@@ -2,12 +2,9 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Pensioner;
-use App\Models\FamilyMember;
-use App\Models\BenFund;
-use App\Models\PensionCase;
+use App\Filament\Widgets\PensionTrends;
+use App\Filament\Widgets\StatsOverview;
 use Filament\Pages\Dashboard as BaseDashboard;
-use Filament\Widgets;
 
 class Dashboard extends BaseDashboard
 {
@@ -18,7 +15,8 @@ class Dashboard extends BaseDashboard
     protected function getHeaderWidgets(): array
     {
         return [
-            Widgets\StatsOverviewWidget::class,
+            StatsOverview::class,
+            PensionTrends::class,
         ];
     }
 }

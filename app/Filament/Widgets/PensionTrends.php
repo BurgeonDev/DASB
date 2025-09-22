@@ -29,6 +29,6 @@ class PensionTrends extends ChartWidget
 
     protected function getType(): string
     {
-        return 'line';
+        return 'line'; // can also use 'bar' or 'pie'
     }
 }
