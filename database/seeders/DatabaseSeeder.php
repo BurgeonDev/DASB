@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             PensionCategorySeeder::class,
             RegtCorpsSeeder::class,
             StatusSeeder::class,
+            PensionerImportSeeder::class,
         ]);
     }
 }

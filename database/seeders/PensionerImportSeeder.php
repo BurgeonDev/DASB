@@ -37,10 +37,12 @@ class PensionerImportSeeder extends Seeder
 
             // 🔹 insert pensioner
             Pensioner::updateOrCreate(
-                ['personal_no' => $data['Personal No']], // unique key
+                [
+                    'personal_no' => (string) intval($data['Personal No']), // ✅ strip decimals
+                ],
                 [
                     'prefix'        => $data['PreFix'] ?? null,
-                    'personal_no'   => $data['Personal No'],
+                    'personal_no'   => (string) intval($data['Personal No']), // ✅ strip decimals
                     'trade'         => $data['Trade'] ?? null,
                     'name'          => $data['Names'] ?? null,
                     'regt_corps_id' => $regtCorps?->id,
@@ -56,10 +58,15 @@ class PensionerImportSeeder extends Seeder
                     'present_address' => $data['Present Address'] ?? null,
                     'mobile_no'     => $data['Mobile No'] ?? null,
                     'cnic_no'       => $data['CNIC No'] ?? null,
-                    'net_pension'   => is_numeric($data['Net Pension']) ? $data['Net Pension'] : null, // ✅ FIX
-                    'date_of_entry' => !empty($data['DO Enlt']) ? Carbon::parse($data['DO Enlt']) : null,
+                    'net_pension'   => is_numeric($data['Net Pension'])
+                        ? (float) $data['Net Pension']
+                        : null,
+                    'date_of_entry' => !empty($data['DO Enlt'])
+                        ? Carbon::parse($data['DO Enlt'])
+                        : null,
                 ]
             );
+
 
 
             $count++;

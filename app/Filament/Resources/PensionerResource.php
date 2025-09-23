@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
 use App\Filament\Resources\PensionerResource\Pages;
 use App\Filament\Resources\PensionerResource\RelationManagers;
 use App\Models\Pensioner;
@@ -163,7 +164,18 @@ class PensionerResource extends Resource
     {
         return $table->columns([
             Tables\Columns\TextColumn::make('date_of_entry')->date()->sortable(),
-            Tables\Columns\TextColumn::make('personal_no')->label('Personal No')->searchable()->sortable(),
+            // Tables\Columns\TextColumn::make('personal_no')->label('Personal No')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('personal_no_with_prefix')
+                ->label('Personal No')
+                ->getStateUsing(fn($record) => $record->prefix . (string) $record->personal_no)
+                ->sortable(
+                    query: fn($query, string $direction) =>
+                    $query->orderByRaw("CONCAT(prefix, personal_no) {$direction}")
+                )
+                ->searchable(['personal_no', 'prefix'])
+                ->formatStateUsing(fn($state) => (string) $state), // force string, no decimals
+
+
             Tables\Columns\TextColumn::make('rank.rank_full')->label('Rank')->sortable()->searchable(),
             Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
             Tables\Columns\TextColumn::make('regtCorps.force')->label('Regt / Corps')->sortable()->searchable(),
@@ -197,26 +209,9 @@ class PensionerResource extends Resource
             )
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-                ExportBulkAction::make()
-                    ->label('Export')
-                    ->exports([
-                        ExcelExport::make()
-                            ->fromTable()
-                            ->withWriterType(Excel::XLSX)
-                            ->label('Excel'),
-                        ExcelExport::make()
-                            ->fromTable()
-                            ->withWriterType(Excel::CSV)
-                            ->label('CSV'),
-                        ExcelExport::make()
-                            ->fromTable()
-                            ->withWriterType(Excel::ODS)
-                            ->label('ODS'),
-                        ExcelExport::make()
-                            ->fromTable()
-                            ->withWriterType(Excel::HTML)
-                            ->label('HTML'),
-                    ]),
+                FilamentExportBulkAction::make('export')
+                    ->label('Export Data'),
+
             ]);
     }
 

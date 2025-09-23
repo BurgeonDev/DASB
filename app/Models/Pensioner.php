@@ -31,6 +31,9 @@ class Pensioner extends Model
         'rank_id',
         'regt_corps_id',
     ];
+    protected $casts = [
+        'personal_no' => 'string',
+    ];
 
     // ✅ Cascade soft delete children
     protected static function booted()

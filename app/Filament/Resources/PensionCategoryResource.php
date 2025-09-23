@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
 use App\Filament\Resources\PensionCategoryResource\Pages;
 use App\Models\PensionCategory;
 use Filament\Forms;
@@ -90,26 +91,9 @@ class PensionCategoryResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()->requiresConfirmation(),
-                    ExportBulkAction::make()
-                        ->label('Export')
-                        ->exports([
-                            ExcelExport::make()
-                                ->fromTable()
-                                ->withWriterType(Excel::XLSX)
-                                ->label('Excel'),
-                            ExcelExport::make()
-                                ->fromTable()
-                                ->withWriterType(Excel::CSV)
-                                ->label('CSV'),
-                            ExcelExport::make()
-                                ->fromTable()
-                                ->withWriterType(Excel::ODS)
-                                ->label('ODS'),
-                            ExcelExport::make()
-                                ->fromTable()
-                                ->withWriterType(Excel::HTML)
-                                ->label('HTML'),
-                        ])
+                    FilamentExportBulkAction::make('export')
+                        ->label('Export Data'),
+
                 ]),
             ])
 
