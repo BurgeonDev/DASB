@@ -20,9 +20,21 @@ class PensionCaseResource extends Resource
     {
         return $form->schema([
             Forms\Components\Select::make('pensioner_id')
-                ->relationship('pensioner', 'name')
+                ->label('Pensioner')
                 ->searchable()
+                ->getSearchResultsUsing(
+                    fn(string $search) =>
+                    \App\Models\Pensioner::query()
+                        ->where('name', 'like', "%{$search}%")
+                        ->limit(20)
+                        ->pluck('name', 'id')
+                )
+                ->getOptionLabelUsing(
+                    fn($value): ?string =>
+                    \App\Models\Pensioner::find($value)?->name
+                )
                 ->required(),
+
 
 
             Forms\Components\TextInput::make('pen_ex_no')->label('PEN Ex No'),
