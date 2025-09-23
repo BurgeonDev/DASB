@@ -37,6 +37,8 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+
+            ->databaseNotifications()
             ->userMenuItems([
                 MenuItem::make()
                     ->label('Settings')

@@ -59,6 +59,7 @@ class PensionerReports extends Page implements Tables\Contracts\HasTable
 
 
             ])
+            ->actions([])
             ->bulkActions([
                 FilamentExportBulkAction::make('export')
                     ->label('Export Data'),
