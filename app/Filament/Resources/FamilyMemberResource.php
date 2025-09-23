@@ -10,6 +10,9 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
+use Maatwebsite\Excel\Excel;
 
 class FamilyMemberResource extends Resource
 {
@@ -117,6 +120,26 @@ class FamilyMemberResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    ExportBulkAction::make()
+                        ->label('Export')
+                        ->exports([
+                            ExcelExport::make()
+                                ->fromTable()
+                                ->withWriterType(Excel::XLSX)
+                                ->label('Excel'),
+                            ExcelExport::make()
+                                ->fromTable()
+                                ->withWriterType(Excel::CSV)
+                                ->label('CSV'),
+                            ExcelExport::make()
+                                ->fromTable()
+                                ->withWriterType(Excel::ODS)
+                                ->label('ODS'),
+                            ExcelExport::make()
+                                ->fromTable()
+                                ->withWriterType(Excel::HTML)
+                                ->label('HTML'),
+                        ])
                 ]),
             ]);
     }

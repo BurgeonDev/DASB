@@ -7,6 +7,9 @@ use App\Models\PensionCase;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Resource;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
+use Maatwebsite\Excel\Excel;
 
 class PensionCaseResource extends Resource
 {
@@ -79,6 +82,26 @@ class PensionCaseResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                ExportBulkAction::make()
+                    ->label('Export')
+                    ->exports([
+                        ExcelExport::make()
+                            ->fromTable()
+                            ->withWriterType(Excel::XLSX)
+                            ->label('Excel'),
+                        ExcelExport::make()
+                            ->fromTable()
+                            ->withWriterType(Excel::CSV)
+                            ->label('CSV'),
+                        ExcelExport::make()
+                            ->fromTable()
+                            ->withWriterType(Excel::ODS)
+                            ->label('ODS'),
+                        ExcelExport::make()
+                            ->fromTable()
+                            ->withWriterType(Excel::HTML)
+                            ->label('HTML'),
+                    ])
             ]);
     }
 

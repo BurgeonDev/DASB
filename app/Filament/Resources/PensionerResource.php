@@ -200,10 +200,22 @@ class PensionerResource extends Resource
                 ExportBulkAction::make()
                     ->label('Export')
                     ->exports([
-                        ExcelExport::make()->withWriterType(Excel::XLSX)->label('Excel'),
-                        ExcelExport::make()->withWriterType(Excel::CSV)->label('CSV'),
-                        ExcelExport::make()->withWriterType(Excel::ODS)->label('ODS'),
-                        ExcelExport::make()->withWriterType(Excel::HTML)->label('HTML'),
+                        ExcelExport::make()
+                            ->fromTable()
+                            ->withWriterType(Excel::XLSX)
+                            ->label('Excel'),
+                        ExcelExport::make()
+                            ->fromTable()
+                            ->withWriterType(Excel::CSV)
+                            ->label('CSV'),
+                        ExcelExport::make()
+                            ->fromTable()
+                            ->withWriterType(Excel::ODS)
+                            ->label('ODS'),
+                        ExcelExport::make()
+                            ->fromTable()
+                            ->withWriterType(Excel::HTML)
+                            ->label('HTML'),
                     ]),
             ]);
     }
