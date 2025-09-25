@@ -85,50 +85,47 @@ class ForwardPensionClaimResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('pension_no')->searchable(),
-                Tables\Columns\TextColumn::make('claimant')->searchable(),
+                Tables\Columns\TextColumn::make('pension_no'),
+                Tables\Columns\TextColumn::make('claimant'),
                 Tables\Columns\TextColumn::make('relation')->sortable(),
                 Tables\Columns\TextColumn::make('from_location')->sortable(),
                 Tables\Columns\TextColumn::make('to_location')->sortable(),
                 Tables\Columns\TextColumn::make('date')->date()->sortable(),
-
-                // Tables\Columns\TextColumn::make('documents')
-                //     ->label('Documents')
-                //     ->formatStateUsing(function ($state) {
-                //         if (empty($state)) {
-                //             return '-';
-                //         }
-
-                //         // Ensure it's an array
-                //         $files = is_array($state) ? $state : json_decode($state, true);
-
-                //         if (!$files) {
-                //             return '-';
-                //         }
-
-                //         $links = [];
-                //         foreach ($files as $file) {
-                //             $url = asset('storage/' . $file);
-                //             $name = basename($file);
-                //             $links[] = "<a href='{$url}' target='_blank' class='text-primary underline'>{$name}</a>";
-                //         }
-
-                //         return implode('<br>', $links);
-                //     })
-                //     ->html(),
                 Tables\Columns\ViewColumn::make('documents')
                     ->label('Documents')
                     ->view('tables.columns.forward-claim-documents'),
-
-
             ])
             ->filters([
+                Tables\Filters\Filter::make('search')
+                    ->form([
+                        Forms\Components\TextInput::make('Search')
+                            ->placeholder('Search Pension No / Claimant')
+                            ->columnSpan(2),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when(
+                                $data['q'],
+                                fn($q, $search) =>
+                                $q->where('pension_no', 'like', "%{$search}%")
+                                    ->orWhere('claimant', 'like', "%{$search}%")
+                                    ->orWhere('relation', 'like', "%{$search}%")
+                                    ->orWhere('from_location', 'like', "%{$search}%")
+                                    ->orWhere('to_location', 'like', "%{$search}%")
+                                    ->orWhere('date', 'like', "%{$search}%")
+                            );
+                    })
+                    ->columnSpan(1),
+
                 Tables\Filters\SelectFilter::make('from_location')
                     ->options([
                         'Rwp' => 'Rawalpindi',
                         'Gujrat' => 'Gujrat',
                         'Jhelum' => 'Jhelum',
-                    ]),
+                    ])
+                    ->label('From')
+                    ->native(false)
+                    ->columnSpan(1),
 
                 Tables\Filters\SelectFilter::make('to_location')
                     ->options([
@@ -136,7 +133,10 @@ class ForwardPensionClaimResource extends Resource
                         'FF Center' => 'FF Center',
                         'BR Center' => 'BR Center',
                         'AK Center' => 'AK Center',
-                    ]),
+                    ])
+                    ->label('To')
+                    ->native(false)
+                    ->columnSpan(1),
 
                 Tables\Filters\SelectFilter::make('relation')
                     ->options([
@@ -144,19 +144,33 @@ class ForwardPensionClaimResource extends Resource
                         'Daughter' => 'Daughter',
                         'Son' => 'Son',
                         'Father' => 'Father',
-                    ]),
+                    ])
+                    ->label('Relation')
+                    ->native(false)
+                    ->columnSpan(1),
 
                 Tables\Filters\Filter::make('date')
                     ->form([
-                        Forms\Components\DatePicker::make('from'),
-                        Forms\Components\DatePicker::make('to'),
+                        Forms\Components\DatePicker::make('from')
+                            ->label('From')
+                            ->native(false)
+                            ->columnSpan(1),
+                        Forms\Components\DatePicker::make('to')
+                            ->label('To')
+                            ->native(false)
+                            ->columnSpan(1),
                     ])
+                    ->columns(2) // ✅ put from/to in the same row
                     ->query(function ($query, array $data) {
                         return $query
                             ->when($data['from'], fn($q, $date) => $q->whereDate('date', '>=', $date))
                             ->when($data['to'], fn($q, $date) => $q->whereDate('date', '<=', $date));
-                    }),
-            ])
+                    })
+                    ->label('Date Range')
+                    ->columnSpan(2),
+            ], layout: Tables\Enums\FiltersLayout::AboveContent)
+            ->filtersFormColumns(6) // ✅ all filters in one row (adjust number if needed)
+
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -164,12 +178,10 @@ class ForwardPensionClaimResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-
-                // ✅ Export option
-                FilamentExportBulkAction::make('export')
-                    ->label('Export Data'),
+                FilamentExportBulkAction::make('export')->label('Export Data'),
             ]);
     }
+
 
     public static function getPages(): array
     {
