@@ -98,7 +98,7 @@ class ForwardPensionClaimResource extends Resource
             ->filters([
                 Tables\Filters\Filter::make('search')
                     ->form([
-                        Forms\Components\TextInput::make('Search')
+                        Forms\Components\TextInput::make('q')->label('Search')
                             ->placeholder('Search Pension No / Claimant')
                             ->columnSpan(2),
                     ])
