@@ -200,10 +200,18 @@ class ForwardPensionClaimResource extends Resource
             ->filtersFormColumns(6) // ✅ all filters in one row (adjust number if needed)
 
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make()->color('info'),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                    \AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction::make('export')
+                        ->color('success')
+                        ->label('Export Data'),
+                ])
+                    ->icon('heroicon-m-ellipsis-vertical') // three dots
+                    ->tooltip('More actions'),
             ])
+
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
                 FilamentExportBulkAction::make('export')->label('Export Data'),
