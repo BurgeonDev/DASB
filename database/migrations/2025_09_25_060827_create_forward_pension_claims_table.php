@@ -10,12 +10,13 @@ return new class extends Migration {
         Schema::create('forward_pension_claims', function (Blueprint $table) {
             $table->id();
             $table->string('from_location');
-            $table->string('to_location');
+            $table->json('to_location'); // ✅ multi-select (array)
             $table->string('pension_no');
             $table->string('claimant');
             $table->string('relation');
             $table->date('date')->default(now());
-            $table->json('documents')->nullable(); // store multiple uploads
+            $table->json('documents')->nullable(); // ✅ multiple uploads
+            $table->text('message')->nullable();   // ✅ new field
             $table->timestamps();
         });
     }

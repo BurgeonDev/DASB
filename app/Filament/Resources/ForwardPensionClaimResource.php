@@ -8,6 +8,7 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Resource;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
+use Filament\Forms\Components\FileUpload;
 
 class ForwardPensionClaimResource extends Resource
 {
@@ -38,8 +39,11 @@ class ForwardPensionClaimResource extends Resource
                     'BR Center' => 'BR Center',
                     'AK Center' => 'AK Center',
                 ])
+                ->multiple() // ✅ multi-select
                 ->searchable()
                 ->required(),
+
+
 
             Forms\Components\TextInput::make('pension_no')
                 ->label('Pension No.')
@@ -69,15 +73,24 @@ class ForwardPensionClaimResource extends Resource
                 ->default(now())
                 ->disabled() // uneditable
                 ->dehydrated(true), // still saves to DB
+            Forms\Components\Textarea::make('message')
+                ->label('Message')
+                ->rows(3)
+                ->nullable(),
 
-            Forms\Components\FileUpload::make('documents')
-                ->label('Upload Documents')
-                ->multiple()
+            FileUpload::make('documents')
+                ->disk('public')
                 ->directory('forward-claims')
+                ->multiple()
                 ->downloadable()
                 ->openable()
                 ->previewable()
-                ->maxFiles(5),
+                ->preserveFilenames()
+                ->reorderable()
+                ->visibility('public')
+
+
+
         ]);
     }
 
@@ -91,6 +104,21 @@ class ForwardPensionClaimResource extends Resource
                 Tables\Columns\TextColumn::make('from_location')->sortable(),
                 Tables\Columns\TextColumn::make('to_location')->sortable(),
                 Tables\Columns\TextColumn::make('date')->date()->sortable(),
+                Tables\Columns\TextColumn::make('message')
+                    ->label('Message')
+                    ->formatStateUsing(fn($state) => \Illuminate\Support\Str::limit($state, 30))
+                    ->extraAttributes(['class' => 'cursor-pointer text-blue-600 underline'])
+                    ->url(fn($record) => null, shouldOpenInNewTab: false) // disable default
+                    ->action(
+                        Tables\Actions\Action::make('viewMessage')
+                            ->label('Read More')
+                            ->modalHeading('Message')
+                            ->modalContent(fn($record) => view('tables.columns.forward-claim-message', [
+                                'message' => $record->message,
+                            ]))
+                            ->modalSubmitAction(false) // hide submit
+                    ),
+
                 Tables\Columns\ViewColumn::make('documents')
                     ->label('Documents')
                     ->view('tables.columns.forward-claim-documents'),

@@ -14,10 +14,12 @@ class ForwardPensionClaim extends Model
         'relation',
         'date',
         'documents',
+        'message', // ✅ new
     ];
 
     protected $casts = [
-        'documents' => 'array', // ✅ makes 
+        'documents' => 'array',
+        'to_location' => 'array', // ✅ store multiple
         'date' => 'date',
     ];
 }
